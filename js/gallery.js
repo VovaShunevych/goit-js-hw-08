@@ -68,20 +68,25 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-const markup = images.map(({ preview, original, description }) => {
-  return `<li class="gallery-item">
-  <a class="gallery-link" href="${removeFirstLaseChar(original)}">
+
+const markup = images
+  .map(({ preview, original, description }) => {
+    return `<li class="gallery-item">
+  <a class="gallery-link" href="${original}">
     <img
       class="gallery-image"
-      src="${removeFirstLaseChar(preview)}"
-      data-source="${removeFirstLaseChar(original)}"
+      src="${preview}"
+      data-source="${original}"
       alt="${description}"
     />
   </a>
 </li>`;
-});
+  })
+  .join("");
 
-gallery.insertAdjacentHTML('beforeend', markup.join(''));
+
+gallery.insertAdjacentHTML('beforeend', markup );
+
 
 gallery.addEventListener('click', event => {
   event.preventDefault();
@@ -101,7 +106,8 @@ document.addEventListener('keydown', event => {
   }
 });
 
-function openModal(src) {
+
+  function openModal(src) {
   const instance = basicLightbox.create(
     `
     	<img src="${src}" width="1112" height="640">
@@ -114,20 +120,29 @@ function openModal(src) {
       },
 
       onClose: instance => {
-        document.addEventListener('keydown', onEscapePress);
+        document.removeEventListener('keydown', onEscapePress);
       },
     }
   );
 
-  instance.show();
+    instance.show();
 
-  function onEscapePress(event) {
-    if (event.code === 'Escape') {
-      instance.close();
+      function onEscapePress(event) {
+        if (event.code === 'Escape') {
+          instance.close();
+        }
+        
+        }
     }
-  }
-}
+  
 
-function removeFirstLaseChar(string) {
-  return string.slice(1, string.length - 1);
-}
+
+    
+
+
+  
+    
+     
+
+    
+
